@@ -3,10 +3,19 @@ import SnapKit
 
 class InfoViewController: UIViewController{
     
+    //갈색
+    let brown: UILabel = {
+        let view = UILabel()
+        //view.frame = CGRect(x: 0, y: 0, width: 393, height: 44)
+        view.backgroundColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     //카페 사진
     lazy var imageBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.979, green: 0.94, blue: 0.865, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.945, green: 0.945, blue: 0.937, alpha: 1)
         return view
     }()
 
@@ -102,7 +111,7 @@ class InfoViewController: UIViewController{
     // Container view of the segmented control
     private lazy var segmentedControlContainerView: UIView = {
         let containerView = UIView()
-        containerView.backgroundColor = UIColor(red: 0.553, green: 0.376, blue: 0.376, alpha: 1)
+        containerView.backgroundColor = UIColor(red: 0.49, green: 0.357, blue: 0.318, alpha: 1)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         return containerView
     }()
@@ -119,6 +128,7 @@ class InfoViewController: UIViewController{
         segmentedControl.insertSegment(withTitle: "카페정보", at: 0, animated: true)
         segmentedControl.insertSegment(withTitle: "위치/교통", at: 1, animated: true)
         segmentedControl.insertSegment(withTitle: "평점 및 후기", at: 2, animated: true)
+        //egmentedControl.layer.cornerRadius = 15
         
         //segmentedControl.layer.cornerRadius = 30
         segmentedControl.layer.masksToBounds = true
@@ -148,11 +158,11 @@ class InfoViewController: UIViewController{
     }()
 
     //information list
-    var dataSource: [Cafe] = [  .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원"),
-                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원"),
-                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원"),
-                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원"),
-                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원")    ]
+    var dataSource: [Cafe] = [  .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원", description: "설명"),
+                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원", description: "설명"),
+                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원", description: "설명"),
+                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원", description: "설명"),
+                                .init(menuImage: UIImage(named: "커피")! ,name: "아메리카노", price: "3500원", description: "설명")    ]
 
     lazy var containerView: UIView = {
         let view = UIView()
@@ -165,7 +175,7 @@ class InfoViewController: UIViewController{
         view.dataSource = self
         view.delegate = self
         view.separatorStyle = .none
-        view.backgroundColor = UIColor(red: 0.98, green: 0.941, blue: 0.867, alpha: 1)
+        //view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         view.rowHeight = 113 //(101+12)
         view.register(MyTableViewCell.self, forCellReuseIdentifier: MyTableViewCell.className)
         //view.register(MyTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -253,18 +263,40 @@ class InfoViewController: UIViewController{
         view.dataSource = self
         view.delegate = self
         view.separatorStyle = .none
-        view.backgroundColor = UIColor(red: 0.98, green: 0.941, blue: 0.867, alpha: 1)
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         view.rowHeight = 113 //(101+12)
         view.register(ReviewTableViewCell.self, forCellReuseIdentifier: ReviewTableViewCell.className)
         return view
     }()
     
+    //edit button
+    let editbutton: UIButton = {
+        var button = UIButton()
+       // button.frame.size = CGSize(width: 51, height: 51)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "edit"), for: .normal)
+        button.backgroundColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1)
+        button.imageView?.contentMode = .scaleAspectFit
+        //button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(brown)
+        brown.snp.makeConstraints { maker in
+            maker.top.equalTo(view.snp.top)
+            maker.width.equalToSuperview()
+            maker.height.equalTo(44)
+            
+        }
+        
         view.addSubview(imageView1)
         NSLayoutConstraint.activate([
-            imageView1.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
             imageView1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView1.widthAnchor.constraint(equalToConstant: 393),
             imageView1.heightAnchor.constraint(equalToConstant: 300),
@@ -272,7 +304,7 @@ class InfoViewController: UIViewController{
         
         view.addSubview(imageView2)
         NSLayoutConstraint.activate([
-            imageView2.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
             imageView2.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView2.widthAnchor.constraint(equalToConstant: 393),
             imageView2.heightAnchor.constraint(equalToConstant: 300),
@@ -280,7 +312,7 @@ class InfoViewController: UIViewController{
         
         view.addSubview(imageView3)
         NSLayoutConstraint.activate([
-            imageView3.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 44),
             imageView3.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView3.widthAnchor.constraint(equalToConstant: 393),
             imageView3.heightAnchor.constraint(equalToConstant: 300),
@@ -312,14 +344,14 @@ class InfoViewController: UIViewController{
             cafelocation.topAnchor.constraint(equalTo: imageBackgroundView.bottomAnchor, constant: 60)
         ])
         
-        view.backgroundColor = UIColor(red: 0.98, green: 0.941, blue: 0.867, alpha: 1)
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         view.addSubview(segmentedControlContainerView)
         segmentedControlContainerView.addSubview(segmentedControl)
 
         // Constrain the container view to the view controller
         let safeLayoutGuide = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            segmentedControlContainerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 396),
+            segmentedControlContainerView.topAnchor.constraint(equalTo: white.bottomAnchor),
             segmentedControlContainerView.leadingAnchor.constraint(equalTo: safeLayoutGuide.leadingAnchor),
             segmentedControlContainerView.widthAnchor.constraint(equalToConstant: 393),
             segmentedControlContainerView.heightAnchor.constraint(equalToConstant: 58)
@@ -418,7 +450,12 @@ class InfoViewController: UIViewController{
         reviewTableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-    
+        
+        view.addSubview(editbutton)
+        editbutton.snp.makeConstraints { maker in
+            maker.top.equalTo(view.snp.top).offset(700)
+            maker.leading.equalTo(view.snp.leading).offset(329)
+        }
     }
     
     
@@ -438,7 +475,7 @@ class InfoViewController: UIViewController{
         
         
         imageBackgroundView.snp.makeConstraints { maker in
-            maker.top.equalTo(view.snp.top)
+            maker.top.equalTo(view.snp.top).offset(44)
             maker.width.equalToSuperview()
             maker.height.equalTo(300)
             
@@ -452,6 +489,7 @@ class InfoViewController: UIViewController{
 
 
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -504,6 +542,16 @@ class InfoViewController: UIViewController{
             
             
         }
+    }
+    /*
+    @objc func openNextView() {
+        let nextVC = WriteReviewViewController()
+        present(nextVC, animated: true, completion: nil)
+    }*/
+    
+    @objc func buttonClicked() {
+        let nextVC = WriteReviewViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
 }

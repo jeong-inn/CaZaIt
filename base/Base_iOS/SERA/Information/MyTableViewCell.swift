@@ -4,7 +4,14 @@ import SnapKit
 class MyTableViewCell: BaseTableViewCell<Cafe> {
 
 
-    private lazy var hstackView: UIStackView = {
+    private lazy var bigHstackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 17
+        return view
+    }()
+    
+    private lazy var smallHstackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         //view.spacing = 17
@@ -41,6 +48,13 @@ class MyTableViewCell: BaseTableViewCell<Cafe> {
         return label
     }()
 
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        //let label = UILabel(frame: CGRect(x: 107, y: 55, width: 116, height: 30))
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .black
+        return label
+    }()
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,15 +67,14 @@ class MyTableViewCell: BaseTableViewCell<Cafe> {
     override func configure() {
         super.configure()
 
-        backgroundColor = UIColor(red: 0.98, green: 0.941, blue: 0.867, alpha: 1)
+        backgroundColor = UIColor(red: 0.945, green: 0.945, blue: 0.937, alpha: 1)
         contentView.layer.cornerRadius = 15
-        //contentView.clipsToBounds = true
         menuImageView.layer.cornerRadius = 5
         menuImageView.clipsToBounds = true
         addSubviews()
         makeConstraints()
     }
-
+/*
     private func addSubviews() {
         //contentView.addSubview(hstackView)
         contentView.addSubview(vstackView)
@@ -73,25 +86,43 @@ class MyTableViewCell: BaseTableViewCell<Cafe> {
         hstackView.addSubview(menuImageView)
         hstackView.addSubview(vstackView)
         //hstackView.addArrangedSubview(vstackView)
+    }*/
+    
+    private func addSubviews() {
+        contentView.addSubview(smallHstackView)
+        smallHstackView.addArrangedSubview(nameLabel)
+        smallHstackView.addArrangedSubview(priceLabel)
+        
+        contentView.addSubview(bigHstackView)
+        bigHstackView.addSubview(menuImageView)
+        bigHstackView.addSubview(vstackView)
+        
+        contentView.addSubview(vstackView)
+        vstackView.addSubview(smallHstackView)
+        //vstackView.addArrangedSubview(smallHstackView)
+        vstackView.addArrangedSubview(descriptionLabel)
     }
 
+
     private func makeConstraints() {
-
-        vstackView.snp.makeConstraints { maker in
+        smallHstackView.snp.makeConstraints { maker in
             maker.leading.equalTo(contentView.snp.leading).inset(107)
-            maker.top.equalTo(contentView.snp.top).inset(31)
-        }
-
-        hstackView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(31)
-            maker.leading.equalTo(contentView.snp.leading).inset(34)
+            maker.leading.equalTo(contentView.snp.leading).inset(20)
         }
         
+        bigHstackView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(31)
+            maker.leading.equalTo(contentView.snp.leading).inset(70)
+        }
+        
+        vstackView.snp.makeConstraints { maker in
+            maker.leading.equalTo(contentView.snp.leading).inset(107)
+            maker.top.equalTo(contentView.snp.top).inset(50)
+        }
         
         menuImageView.snp.makeConstraints { maker in
             maker.width.equalTo(73)
             maker.height.equalTo(73)
-            //.cornerRadius = 5
             maker.leading.equalTo(contentView.snp.leading).inset(17)
             maker.top.equalTo(contentView.snp.top).inset(14)
         }
@@ -115,5 +146,6 @@ class MyTableViewCell: BaseTableViewCell<Cafe> {
         menuImageView.image = model.menuImage
         nameLabel.text = model.name
         priceLabel.text = model.price
+        descriptionLabel.text = model.description
     }
 }

@@ -91,7 +91,7 @@ class ReviewTableViewCell: ReviewBaseTableViewCell<Review> {
     override func configure() {
         super.configure()
 
-        backgroundColor = UIColor(red: 0.98, green: 0.941, blue: 0.867, alpha: 1)
+        backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         contentView.layer.cornerRadius = 15
         addSubviews()
         makeConstraints()
