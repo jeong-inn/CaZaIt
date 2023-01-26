@@ -3,27 +3,6 @@ import SnapKit
 
 class MyTableViewCell: BaseTableViewCell<Cafe> {
 
-
-    private lazy var bigHstackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 17
-        return view
-    }()
-    
-    private lazy var smallHstackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        //view.spacing = 17
-        return view
-    }()
-    
-    private lazy var vstackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 5
-        return view
-    }()
     
     private lazy var menuImageView: UIImageView = {
         let image = UIImageView()
@@ -74,71 +53,39 @@ class MyTableViewCell: BaseTableViewCell<Cafe> {
         addSubviews()
         makeConstraints()
     }
-/*
-    private func addSubviews() {
-        //contentView.addSubview(hstackView)
-        contentView.addSubview(vstackView)
-        vstackView.addArrangedSubview(nameLabel)
-        vstackView.addArrangedSubview(priceLabel)
-        
-        contentView.addSubview(hstackView)
-        //hstackView.addArrangedSubview(menuImageView)
-        hstackView.addSubview(menuImageView)
-        hstackView.addSubview(vstackView)
-        //hstackView.addArrangedSubview(vstackView)
-    }*/
     
     private func addSubviews() {
-        contentView.addSubview(smallHstackView)
-        smallHstackView.addArrangedSubview(nameLabel)
-        smallHstackView.addArrangedSubview(priceLabel)
-        
-        contentView.addSubview(bigHstackView)
-        bigHstackView.addSubview(menuImageView)
-        bigHstackView.addSubview(vstackView)
-        
-        contentView.addSubview(vstackView)
-        vstackView.addSubview(smallHstackView)
-        //vstackView.addArrangedSubview(smallHstackView)
-        vstackView.addArrangedSubview(descriptionLabel)
+        contentView.addSubview(menuImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(priceLabel)
+        contentView.addSubview(descriptionLabel)
     }
 
 
     private func makeConstraints() {
-        smallHstackView.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leading).inset(107)
-            maker.leading.equalTo(contentView.snp.leading).inset(20)
-        }
-        
-        bigHstackView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(31)
-            maker.leading.equalTo(contentView.snp.leading).inset(70)
-        }
-        
-        vstackView.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leading).inset(107)
-            maker.top.equalTo(contentView.snp.top).inset(50)
-        }
-        
         menuImageView.snp.makeConstraints { maker in
-            maker.width.equalTo(73)
-            maker.height.equalTo(73)
             maker.leading.equalTo(contentView.snp.leading).inset(17)
             maker.top.equalTo(contentView.snp.top).inset(14)
+            maker.width.equalTo(73)
+            maker.height.equalTo(73)
         }
-        /*
+        
         nameLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(menuImageView.snp.trailing).inset(17)
-            maker.top.equalTo(contentView.snp.top).inset(31)
+            maker.top.equalTo(contentView.snp.top).offset(20)
+            maker.leading.equalTo(contentView.snp.leading).offset(107)
         }
         
         priceLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(menuImageView.snp.trailing).inset(17)
-            maker.top.equalTo(nameLabel.snp.bottom).inset(5)
+            maker.top.equalTo(contentView.snp.top).offset(24)
+            maker.leading.equalTo(contentView.snp.leading).offset(181.5)
         }
-*/
-        //nameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        //priceLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+       
+        descriptionLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(contentView.snp.leading).inset(107)
+            maker.top.equalTo(contentView.snp.top).inset(50)
+        }
+
+
     }
 
     override func bind(_ model: Cafe) {

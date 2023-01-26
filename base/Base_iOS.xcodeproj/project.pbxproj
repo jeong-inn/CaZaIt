@@ -117,9 +117,9 @@
 		6C2B40C9297543C2005ED22C /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				6C2B40CA297543C2005ED22C /* BaseTableViewCell.swift */,
 				6C2B40CB297543C2005ED22C /* Cafe.swift */,
 				6C2B40CC297543C2005ED22C /* MyTableViewCell.swift */,
+				6C2B40CA297543C2005ED22C /* BaseTableViewCell.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";

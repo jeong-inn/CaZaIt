@@ -7,16 +7,10 @@ class ReviewTableViewCell: ReviewBaseTableViewCell<Review> {
     private lazy var hstackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 10
-        return view
-    }()
-    
-    private lazy var vstackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
         view.spacing = 5
         return view
     }()
+
     
     private lazy var starStackView: UIStackView = {
         let view = UIStackView()
@@ -110,25 +104,31 @@ class ReviewTableViewCell: ReviewBaseTableViewCell<Review> {
         contentView.addSubview(hstackView)
         hstackView.addArrangedSubview(nicknameLabel)
         hstackView.addArrangedSubview(dateLabel)
-        //hstackView.addArrangedSubview(separator)
         
         
-        contentView.addSubview(vstackView)
-        vstackView.addArrangedSubview(starStackView)
-        vstackView.addArrangedSubview(hstackView)
-        vstackView.addArrangedSubview(commentLabel)
-        //vstackView.addSubview(commentLabel)
-        //vstackView.addSubview(hstackView)
+        contentView.addSubview(starStackView)
+        contentView.addSubview(hstackView)
+        contentView.addSubview(commentLabel)
+
         
     }
 
     private func makeConstraints() {
 
-        vstackView.snp.makeConstraints { maker in
-            maker.leading.equalTo(contentView.snp.leading).inset(20)
-            maker.top.equalTo(contentView.snp.top).inset(14.2)
+        starStackView.snp.makeConstraints { maker in
+            maker.top.equalTo(contentView.snp.top).inset(11)
+            maker.leading.equalTo(contentView.snp.leading).inset(18)
         }
         
+        hstackView.snp.makeConstraints { maker in
+            maker.top.equalTo(contentView.snp.top).inset(41)
+            maker.leading.equalTo(contentView.snp.leading).inset(21)
+        }
+        
+        commentLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(contentView.snp.top).inset(70)
+            maker.leading.equalTo(contentView.snp.leading).inset(21)
+        }
 
     }
 

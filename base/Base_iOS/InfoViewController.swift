@@ -213,10 +213,6 @@ class InfoViewController: UIViewController{
     let average_star = UIImageView(image: UIImage(systemName: "star",
                                                   withConfiguration: UIImage.SymbolConfiguration(pointSize: 21, weight: .bold, scale: .medium))?.withTintColor(UIColor(red: 0.553, green: 0.376, blue: 0.376, alpha: 1), renderingMode: .alwaysOriginal))
     //weight = 굵기 , scale = 크기
-    //뒤로가기
-    let back = UIImageView(image: UIImage(systemName: "chevron.backward",
-                                          withConfiguration: UIImage.SymbolConfiguration(pointSize: 21, weight: .regular, scale: .medium)))
-
     
     let average_review: UILabel = {
         let label = UILabel()
@@ -230,7 +226,7 @@ class InfoViewController: UIViewController{
     
     let five: UILabel = {
         let label = UILabel()
-        label.text = "/5"
+        label.text = "/ 5"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .boldSystemFont(ofSize: 14)
         label.textColor =  UIColor(red: 0.553, green: 0.376, blue: 0.376, alpha: 1)
@@ -272,13 +268,12 @@ class InfoViewController: UIViewController{
     //edit button
     let editbutton: UIButton = {
         var button = UIButton()
-       // button.frame.size = CGSize(width: 51, height: 51)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "edit"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "edit"), for: .normal)
+        //button.setImage(UIImage(systemName: "edit"), for: .normal)
         button.backgroundColor = UIColor(red: 0.363, green: 0.142, blue: 0.142, alpha: 1)
         button.imageView?.contentMode = .scaleAspectFit
-        //button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
-        button.layer.cornerRadius = 15
+        button.layer.cornerRadius = 51 / 2
         button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         return button
     }()
@@ -411,7 +406,7 @@ class InfoViewController: UIViewController{
         
         review.addSubview(five)
         NSLayoutConstraint.activate([
-            five.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -330),
+            five.bottomAnchor.constraint(equalTo: white.bottomAnchor, constant: 125),
             five.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 346.68)
         ])
         
@@ -429,12 +424,7 @@ class InfoViewController: UIViewController{
             maker.centerX.equalTo(view.snp.centerX)
         }
         
-        
-        view.addSubview(back)
-        NSLayoutConstraint.activate([
-            back.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 33),
-            back.topAnchor.constraint(equalTo: view.topAnchor, constant: -47)
-        ])
+    
 
         review.addSubview(reviewContainerView)
         reviewContainerView.addSubview(reviewTableView)
@@ -449,12 +439,6 @@ class InfoViewController: UIViewController{
 
         reviewTableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
-        }
-        
-        view.addSubview(editbutton)
-        editbutton.snp.makeConstraints { maker in
-            maker.top.equalTo(view.snp.top).offset(700)
-            maker.leading.equalTo(view.snp.leading).offset(329)
         }
     }
     
@@ -488,6 +472,16 @@ class InfoViewController: UIViewController{
         pageViewController.didMove(toParent: self)
 
 
+    }
+    
+    private func editButton() {
+        view.addSubview(editbutton)
+        view.bringSubviewToFront(self.editbutton)
+        editbutton.snp.makeConstraints { maker in
+            maker.top.equalTo(view.snp.top).offset(700)
+            maker.leading.equalTo(view.snp.leading).offset(329)
+            maker.width.height.equalTo(51)
+        }
     }
 
     
@@ -527,20 +521,24 @@ class InfoViewController: UIViewController{
             containerView.isHidden = false
             locationImageView.isHidden = true
             review.isHidden = true
+            editbutton.isHidden = true
+
         
         case 1:
             view.addSubview(locationImageView)
             containerView.isHidden = true
             locationImageView.isHidden = false
             review.isHidden = true
+            editbutton.isHidden = true
+
 
         default:
             view.addSubview(review)
+            editButton()
             containerView.isHidden = true
             locationImageView.isHidden = true
             review.isHidden = false
-            
-            
+            editbutton.isHidden = false
         }
     }
     /*
